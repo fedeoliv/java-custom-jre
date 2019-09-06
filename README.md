@@ -1,4 +1,4 @@
-# Lightweight Java Docker image with Custom JRE
+# Lightweight Java Docker image with a custom JRE
 
 ## Background
 
@@ -15,6 +15,41 @@ You can have a leightweight Java Docker image by:
 <!-- ## Modularization and jlink
 
 Package visibility -->
+
+## About the samples
+
+This repo contains two identical projects, where one uses the default JRE (`maven-app-v1`) while the other leverages a custom JRE (`maven-app-v2`).
+
+Both are simple Maven projects with the same `App.java` structure to log a 'Hello World!' message:
+
+```java
+package com.sample.app;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class App {
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    
+    public static void main(String[] args) {
+        LOGGER.info("Hello World!");
+    }
+}
+```
+
+Both project only need these classes to run: `com.sample.app.App`, `String`, `org.slf4j.Logger` and `org.slf4j.LoggerFactory`. The difference between these projects are:
+
+- The `maven-app-v1` is a default Maven project that uses the `openjdk:12-alpine` as the Docker base image.
+- The `maven-app-v2` is a modularized Maven project that uses [jlink](https://docs.oracle.com/en/java/javase/11/tools/jlink.html) to create a custom JRE and uses `alpine:3.8` as the Docker base image.
+
+The custom JRE is only possible by defining modules on a `module-info.java` file:
+
+```java
+module com.sample.jlink {
+    requires org.slf4j;
+    exports com.sample.app;
+}
+```
 
 ## Prerequisites
 
