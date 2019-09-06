@@ -1,4 +1,4 @@
-# Leightweight Java Docker image with Custom JRE
+# Lightweight Java Docker image with Custom JRE
 
 ## Background
 
