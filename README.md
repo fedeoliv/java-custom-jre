@@ -29,7 +29,7 @@ For development purposes:
 
 ## Getting Started
 
-### **Maven App v1**
+### **Building and running the Maven App v1**
 
 On the `maven-app-v1` folder, build the image:
 
@@ -45,7 +45,7 @@ docker run maven-app:1.0
 
 It's expected to see the following log: `[main] INFO com.sample.app.App - Hello World!`.
 
-### **Maven App v2**
+### **Building and running the Maven App v2**
 
 On the `maven-app-v2` folder, build the image:
 
@@ -61,6 +61,19 @@ docker run maven-app:2.0
 
 It's expected to see the following log: `[main] INFO com.sample.app.App - Hello World!`.
 
+## Comparing results
+
+Now let's list and compare the image size for each application with the following command:
+
+```sh
+docker images
+```
+
+The result will be similar to this one:
+
+![](./images/images-comparison.JPG)
+
+The image size was reduced from **339MB** to **53.9MB**, representing **~84%** reduction in the image size. Really impressive!
 ## Notes
 
 - The `maven-app-v2` sample uses `alpine:3.8` as the base image, while the `maven-app-v1` uses the `openjdk:12-alpine`. This is because the `openjdk:12-alpine` image already comes with the default JRE, while the `alpine:3.8` doesn't, so we add the custom JRE in the alpine image. 
