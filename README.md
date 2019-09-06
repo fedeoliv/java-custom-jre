@@ -1,4 +1,4 @@
-# Leightweight Java Docker images with Custom Launchers
+# Leightweight Java Docker image with Custom JRE
 
 ## Background
 
