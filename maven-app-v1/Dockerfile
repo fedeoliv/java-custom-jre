@@ -5,12 +5,12 @@ WORKDIR /app
 COPY pom.xml .
 COPY src src
 
-RUN mvn package
+RUN mvn clean compile assembly:single
 
 FROM openjdk:12-alpine
 
 COPY --from=build \
-    /app/target/maven-app-1.0-SNAPSHOT.jar \
+    /app/target/maven-app-1.0-SNAPSHOT-jar-with-dependencies.jar \
     /app/target/maven-app.jar
 
 # Java 12 already sets -XX:+UseContainerSupport by default
