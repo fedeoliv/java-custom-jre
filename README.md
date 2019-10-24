@@ -9,8 +9,9 @@ If you have tried to create a Docker image for a Java application, you know it t
 
 In this repository we use the following approaches to have a smaller Docker image:
 
-1. **Create a custom JRE using** [jlink](https://docs.oracle.com/en/java/javase/11/tools/jlink.html) and [jdeps](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jdeps.html). We want a JRE that contains only the platform modules that are required by the application.
-2. **Multi-stage builds**. Creating a custom JRE allows us to leverage smaller final images like [alpine](https://hub.docker.com/_/alpine) - a minimal Docker image based on Alpine Linux with a complete package index and only **5 MB** in size!
+1. **Java modularity**. Java 9 introduced a new level of packages abstraction known as *modules*, making possible to eliminate unnecessary modules that are part of the JDK as they are (most of them) decoupled.
+2. **Create a custom JRE using** [jlink](https://docs.oracle.com/en/java/javase/11/tools/jlink.html) and [jdeps](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jdeps.html). We want a JRE that contains only the platform modules that are required by the application.
+3. **Multi-stage builds**. Creating a custom JRE allows us to leverage smaller final images like [alpine](https://hub.docker.com/_/alpine) - a minimal Docker image based on Alpine Linux with a complete package index and only **5 MB** in size!
 
 ## Prerequisites
 
