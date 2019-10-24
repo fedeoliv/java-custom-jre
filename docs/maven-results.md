@@ -68,7 +68,7 @@ docker images
 
 The result will be similar to this one:
 
-![](./images/images-comparison.JPG)
+![](./images/maven-results.jpg)
 
 The image size was reduced from **339MB** to **53.9MB**, representing **~84%** reduction in the image size.
 
