@@ -5,13 +5,12 @@ WORKDIR /app
 COPY pom.xml .
 COPY src src
 
-RUN mvn clean compile assembly:single
+RUN mvn clean package
 
 FROM openjdk:12-alpine
 
 COPY --from=build \
-    /app/target/maven-app-1.0-SNAPSHOT-jar-with-dependencies.jar \
-    /app/target/maven-app.jar
+    /app/target/spring-boot-app-1.0.0.jar \
+    /app/target/app.jar
 
-ENTRYPOINT ["java", "-jar"]
-CMD ["/app/target/maven-app.jar"]
+CMD ["java", "-jar", "/app/target/app.jar"]
