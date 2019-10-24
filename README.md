@@ -1,24 +1,40 @@
-# Lightweight Java Docker image with a custom JRE
+# Docker image size optimization for Java applications
 
 ## Background
 
-If you have tried to create a Docker container image for a Java application, you know it tends to be large because:
+If you have tried to create a Docker image for a Java application, you know it tends to be large because:
 
 - Official Java base Docker images are relatively large. For example, the `openjdk:12-alpine` has **339MB**.
-- There are many classes that might not be used by your application, but they are bundled anyway by the JRE. For example, application servers that run in headless mode still bundle graphical packages such as `javax.swing`. Therefore, to run a small program, we have to maintain a complete JRE, which is simply a waste of memory.
+- There are many classes that might not be used by your application, but they are bundled anyway by the JRE (for example, application servers that run in headless mode still bundle graphical packages such as `javax.swing`). Even for a small application we have to maintain a complete JRE, which is simply a waste of memory.
 
-You can have a leightweight Java Docker image by:
+In this repository we use the following approaches to have a smaller Docker image:
 
-- Leveraging [alpine](https://hub.docker.com/_/alpine) as the base image - a minimal Docker image based on Alpine Linux with a complete package index and only **5 MB** in size!
-- Creating a custom JRE that contains only the platform modules that are required for the application using [jlink](https://docs.oracle.com/en/java/javase/11/tools/jlink.html) tool (available for Java 9 or later).
+1. **Create a custom JRE using** [jlink](https://docs.oracle.com/en/java/javase/11/tools/jlink.html) and [jdeps](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jdeps.html). We want a JRE that contains only the platform modules that are required by the application.
+2. **Multi-stage builds**. Creating a custom JRE allows us to leverage smaller final images like [alpine](https://hub.docker.com/_/alpine) - a minimal Docker image based on Alpine Linux with a complete package index and only **5 MB** in size!
 
-<!-- ## Modularization and jlink
+## Prerequisites
 
-Package visibility -->
+For development purposes:
+
+- Java JDK 9 or later
+- [Maven](https://maven.apache.org/install.html) 3.x or later
+
+For building and running containers:
+
+- [Docker](https://docs.docker.com/install/) (Windows, Linux or Mac)
 
 ## About the samples
 
-This repo contains two identical projects, where one uses the default JRE (`maven-app-v1`) while the other leverages a custom JRE (`maven-app-v2`).
+This repository contains **Maven** and **Spring Boot** samples, structured in the following way:
+
+| Folder      | Description |
+|-------------|-------------|
+| maven       | The `maven-app-v1` folder contains a Maven project using the default JRE, while the `maven-app-v2` is similar but using a custom JRE.|
+| spring-boot | The `spring-boot-default` folder contains a Spring Boot project using the default JRE, while the `spring-boot-custom` is similar but using a custom JRE.|
+
+
+
+<!-- This repo contains two identical projects, where one uses the default JRE (`maven-app-v1`) while the other leverages a custom JRE (`maven-app-v2`).
 
 Both are simple Maven projects with the same `App.java` structure to log a 'Hello World!' message:
 
@@ -50,17 +66,6 @@ module com.sample.jlink {
     exports com.sample.app;
 }
 ```
-
-## Prerequisites
-
-For just building and running containers:
-
-- [Docker](https://docs.docker.com/install/) (Windows, Linux or Mac)
-
-For development purposes:
-
-- Java JDK 9 or later
-- [Maven](https://maven.apache.org/install.html) 3.x or later
 
 ## Getting Started
 
@@ -111,5 +116,5 @@ The result will be similar to this one:
 The image size was reduced from **339MB** to **53.9MB**, representing **~84%** reduction in the image size. Really impressive!
 ## Notes
 
-- The `maven-app-v2` sample uses `alpine:3.8` as the base image, while the `maven-app-v1` uses the `openjdk:12-alpine`. This is because the `openjdk:12-alpine` image already comes with the default JRE, while the `alpine:3.8` doesn't, so we add the custom JRE in the alpine image. 
+- The `maven-app-v2` sample uses `alpine:3.8` as the base image, while the `maven-app-v1` uses the `openjdk:12-alpine`. This is because the `openjdk:12-alpine` image already comes with the default JRE, while the `alpine:3.8` doesn't, so we add the custom JRE in the alpine image.  -->
 
