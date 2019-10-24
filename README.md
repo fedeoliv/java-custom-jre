@@ -41,8 +41,17 @@ You can build all Docker images for Maven and Spring Boot applications to compar
 
 Follow the instructions described [here](./docs/maven-results.md) to compare results of `maven-app-v1` and `maven-app-v2` projects.
 
-![](./docs/images/images-comparison.JPG)
+![](./docs/images/maven-results.jpg)
 
-The image size was reduced from **339MB** to **53.9MB**, representing **~84%** reduction in the image size.
+The image size was reduced from **339MB** to **53.9MB**, representing **~84.1%** reduction in the image size.
+
+### **Spring Boot**
+
+Follow the instructions described [here](./docs/spring-boot-results.md) to compare results of `spring-boot-default` and `spring-boot-custom` projects.
+
+![](./docs/images/spring-boot-results.jpg)
+
+The image size was reduced from **358MB** to **113MB**, representing **~68.4%** reduction in the image size.
+
 
 
